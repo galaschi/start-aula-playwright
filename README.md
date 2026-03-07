@@ -4,7 +4,7 @@
 > Escreva aqui a explicação inicial da aula (contexto, objetivos e visão geral da estratégia de automação).
 
 ## Como acessar as aulas
-- A branch `main` contém apenas este README.
+- Este README permanece completo na `main` e tambem em todas as branches das aulas.
 - Cada aula terá seu conteúdo em uma branch específica (`aula-1`, `aula-2`, etc.).
 - Para acessar uma aula, faça checkout da branch correspondente.
 
@@ -12,6 +12,15 @@
 
 ### Acessar o código da Aula 1
 - `git switch aula-1`
+ou
+- `git switch aula-1-dever`
+
+### Conteúdo da Aula 1
+- Instalação do projeto Playwright.
+- Implementação dos testes:
+   - `Buscar por um produto`
+   - `Filtrar por categoria (Dever de casa)`
+   - `Filtrar por preco (Dever de casa)`
 
 ### Material da aula
 - Em breve: _adicione aqui o link do material da aula._
