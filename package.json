@@ -1,7 +1,7 @@
 {
   "name": "aula_playwright",
   "version": "1.0.0",
-  "description": "> [!NOTE]\r > Escreva aqui a explicação inicial da aula (contexto, objetivos e visão geral da estratégia de automação).",
+  "description": "Crescer: Automação de testes com Playwright",
   "main": "index.js",
   "scripts": {},
   "keywords": [],
