@@ -8,6 +8,7 @@
 - Cada aula terá seu conteúdo em uma branch específica (`aula-1`, `aula-2`, etc.).
 - Para acessar uma aula, faça checkout da branch correspondente.
 
+
 ## Aula 1: Estratégia de Automação de Testes
 
 ### Acessar o código da Aula 1
@@ -21,9 +22,6 @@ ou
    - `Buscar por um produto`
    - `Filtrar por categoria (Dever de casa)`
    - `Filtrar por preco (Dever de casa)`
-
-### Material da aula
-- Em breve: _adicione aqui o link do material da aula._
 
 ### Documentação oficial do Playwright
 - https://playwright.dev/docs/intro
@@ -40,3 +38,23 @@ ou
    - `√ Where to put your end-to-end tests? · tests`
    - `√ Add a GitHub Actions workflow? (Y/n) · false`
    - `√ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · true`
+
+
+## Aula 2: Padrões de Projetos e Boas Práticas
+
+### Acessar o código da Aula 2
+- `git switch aula-2`
+ou
+- `git switch aula-2-dever`
+
+### Conteúdo da Aula 2
+- Refatoração dos testes para uma estrutura mais organizada.
+- Aplicação de `Page Object`.
+- Organização dos testes em estilo `BDD` (Feature e Cenários).
+- Criação da camada de `steps` para centralizar ações e validações.
+- Implementação dos testes:
+   - `Cadastrar um usuario (Dever de casa)`
+   - `Realizar login (Dever de casa)`
+
+### Material da aula
+- Em breve: _adicione aqui o link do material da aula._
