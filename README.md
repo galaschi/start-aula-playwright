@@ -44,12 +44,17 @@ ou
 
 ### Acessar o código da Aula 2
 - `git switch aula-2`
+ou
+- `git switch aula-2-dever`
 
 ### Conteúdo da Aula 2
 - Refatoração dos testes para uma estrutura mais organizada.
 - Aplicação de `Page Object`.
 - Organização dos testes em estilo `BDD` (Feature e Cenários).
 - Criação da camada de `steps` para centralizar ações e validações.
+- Implementação dos testes:
+   - `Cadastrar um usuario (Dever de casa)`
+   - `Realizar login (Dever de casa)`
 
 ### Material da aula
 - Em breve: _adicione aqui o link do material da aula._
