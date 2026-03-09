@@ -1,7 +1,9 @@
 # Aula de Playwright - Hat Store
 
 > [!NOTE]
-> Escreva aqui a explicação inicial da aula (contexto, objetivos e visão geral da estratégia de automação).
+> Este treinamento foi pensado para evoluir de forma gradual, saindo da base da automação de testes e avançando para práticas mais robustas de projeto.
+> Nas próximas aulas, vamos abordar gerenciamento de massa de dados, diversidade de asserções, regressão visual, paralelismo, fixtures, scripts, configurações e execuções por linha de comando.
+> Também avançaremos em testes de API, incluindo funcionamento básico de testes automatizados, padrão de arquitetura e testes de contrato.
 
 ## Como acessar as aulas
 - Este README permanece completo na `main` e tambem em todas as branches das aulas.
@@ -11,17 +13,20 @@
 
 ## Aula 1: Estratégia de Automação de Testes
 
-### Acessar o código da Aula 1
+### Acessar o código
 - `git switch aula-1`
 ou
 - `git switch aula-1-dever`
 
-### Conteúdo da Aula 1
+### Conteúdo
 - Instalação do projeto Playwright.
 - Implementação dos testes:
    - `Buscar por um produto`
    - `Filtrar por categoria (Dever de casa)`
    - `Filtrar por preco (Dever de casa)`
+
+### Material
+- https://cwisw-my.sharepoint.com/:p:/r/personal/gabriel_cartelli_cwi_com_br/Documents/Crescer%20QA%20-%20Aula%2001%20-%20Automa%C3%A7%C3%A3o.pptx?d=w6eb3dc41e90b40138a2fe35aa849a4e4&csf=1&web=1&e=F0L2ar
 
 ### Documentação oficial do Playwright
 - https://playwright.dev/docs/intro
@@ -42,12 +47,12 @@ ou
 
 ## Aula 2: Padrões de Projetos e Boas Práticas
 
-### Acessar o código da Aula 2
+### Acessar o código
 - `git switch aula-2`
 ou
 - `git switch aula-2-dever`
 
-### Conteúdo da Aula 2
+### Conteúdo
 - Refatoração dos testes para uma estrutura mais organizada.
 - Aplicação de `Page Object`.
 - Organização dos testes em estilo `BDD` (Feature e Cenários).
@@ -56,5 +61,5 @@ ou
    - `Cadastrar um usuario (Dever de casa)`
    - `Realizar login (Dever de casa)`
 
-### Material da aula
-- Em breve: _adicione aqui o link do material da aula._
+### Material
+- https://cwisw-my.sharepoint.com/:p:/r/personal/gabriel_cartelli_cwi_com_br/Documents/Crescer%20QA%20-%20Aula%2002%20-%20Automa%C3%A7%C3%A3o.pptx?d=wd6685b2bb2244333a71c2c7ffc498061&csf=1&web=1&e=FdZXjT
