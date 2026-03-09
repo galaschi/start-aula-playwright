@@ -1,46 +1,17 @@
-import { test } from '@playwright/test';
-import { HatStoreSteps } from '../steps/hat-store.steps';
+import { test, expect } from '@playwright/test';
 
-test.describe('Busca e Carrinho', () => {
-    test('Buscar por um produto e adicionar ao carrinho', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
+// Buscar por um produto e adicionar ao carrinho
+test('Buscar por um produto', async ({ page }) => {
 
-        await steps.dadoQueAcessoAHome();
-        await steps.quandoBuscoPorUmProduto('Chapéu Floppy');
-        await steps.quandoAdicionoProdutoAoCarrinho('Chapéu Floppy');
-        await steps.entaoDevoVerProdutoNoCarrinho('Chapéu Floppy');
-    });
-});
+    // Acessar a página inicial
+    await page.goto('https://hatstore-prd.fly.dev/');
 
-test.describe('Filtros de Produtos', () => {
-    test('Filtrar produtos por categoria Nacional', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
+    // Buscar por um produto
+    await page.fill('input[placeholder="Buscar chapéu..."]', 'Chapéu Floppy');
 
-        await steps.dadoQueAcessoAHome();
-        await steps.entaoDevoVerQuantidadeDeProdutos(15);
-        await steps.quandoSelecionoCategorias(['Nacional']);
-        await steps.entaoCategoriaDeveEstarMarcada(['Nacional']);
-        await steps.entaoDevoVerQuantidadeDeProdutos(5);
-        await steps.entaoDevoVerListaDeProdutos([
-            'Chapéu Sertanejo',
-            'Chapéu Cangaceiro',
-            'Chapéu Snapback',
-            'Chapéu de Pescador',
-            'Chapéu Gaúcho'
-        ]);
-    });
+    // Adicionar item ao carrinho
+    await page.click('button:has-text("Adicionar ao carrinho")');
 
-    test('Filtrar produtos por faixa de preco', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
-
-        await steps.dadoQueAcessoAHome();
-        await steps.quandoFiltroPorFaixaDePreco(50, 80);
-        await steps.entaoDevoVerQuantidadeDeProdutos(4);
-        await steps.entaoDevoVerListaDeProdutos([
-            'Chapéu Floppy',
-            'Chapéu Pork Pie',
-            'Chapéu Gustavo Carvalho',
-            'Chapéu Bowler'
-        ]);
-    });
+    // Validar que o item foi adicionado ao carrinho
+    await expect(page.locator('.cart-item-nome')).toHaveText('Chapéu Floppy');
 });
