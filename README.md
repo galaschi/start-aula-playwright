@@ -2,7 +2,7 @@
 
 > [!NOTE]
 > Este treinamento foi pensado para evoluir de forma gradual, saindo da base da automação de testes e avançando para práticas mais robustas de projeto.
-> Nas próximas aulas, vamos abordar gerenciamento de massa de dados, diversidade de asserções, regressão visual, paralelismo, fixtures, scripts, configurações e execuções por linha de comando.
+> Nestas aulas abordaremos gerenciamento de massa de dados, diversidade de asserções, regressão visual, paralelismo, fixtures, scripts, configurações e execuções por linha de comando.
 > Também avançaremos em testes de API, incluindo funcionamento básico de testes automatizados, padrão de arquitetura e testes de contrato.
 
 ## Como acessar as aulas
@@ -63,3 +63,48 @@ ou
 
 ### Material
 - https://cwisw-my.sharepoint.com/:p:/r/personal/gabriel_cartelli_cwi_com_br/Documents/Crescer%20QA%20-%20Aula%2002%20-%20Automa%C3%A7%C3%A3o.pptx?d=wd6685b2bb2244333a71c2c7ffc498061&csf=1&web=1&e=FdZXjT
+
+
+## Aula 3: Automação frontend com Playwright
+
+### Acessar o código
+- `git switch aula-3`
+
+### Conteúdo
+- Separação dos testes por contexto de negócio (home, filtros, login e visual).
+- Cenários combinados de componentes usando categoria + faixa de preço + busca.
+- Cobertura de login e cadastro com cenários positivos e negativos.
+- Estratégia de massa de dados com dados centralizados e factory para usuário dinâmico.
+- Regressão visual da home com baseline versionado.
+- Fixture compartilhada para injeção de páginas, steps e dados.
+- Scripts de CLI para executar suíte completa, parcial e visual.
+- Organização para manutenção futura
+
+### Estrutura principal da Aula 3
+- `fixtures/hat-store.fixture.js`
+- `pages/home.page.js`
+- `pages/login.page.js`
+- `steps/hat-store.steps.js`
+- `tests/data/home.data.js`
+- `tests/data/login.data.js`
+- `tests/autenticado/carrinho.spec.js`
+- `tests/home/home.spec.js`
+- `tests/login/cadastro.spec.js`
+- `tests/login/login.spec.js`
+
+### Comandos de execução (CLI)
+- `npm run test`
+- `npm run test:headed`
+- `npm run test:smoke`
+- `npm run test:filters`
+- `npm run test:home`
+- `npm run test:cadastro`
+- `npm run test:login`
+- `npm run test:login:todos`
+- `npm run test:autenticado`
+- `npm run test:visual`
+- `npm run test:visual:update`
+- `npm run report`
+
+### Material
+- Nesta aula, o conteúdo está 100% na própria branch (`aula-3`).

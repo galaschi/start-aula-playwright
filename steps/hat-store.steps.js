@@ -1,12 +1,12 @@
 import { expect } from '@playwright/test';
 import { HomePage } from '../pages/home.page';
-import { AuthPage } from '../pages/auth.page';
+import { LoginPage } from '../pages/login.page';
 
 export class HatStoreSteps {
     constructor(page) {
         this.page = page;
         this.home = new HomePage(page);
-        this.auth = new AuthPage(page);
+        this.login = new LoginPage(page);
     }
 
     async dadoQueAcessoAHome() {
@@ -33,9 +33,7 @@ export class HatStoreSteps {
     }
 
     async entaoCategoriaDeveEstarMarcada(categoriasMarcadas) {
-        const categorias = ['Nacional', 'Internacional', 'Crescer'];
-
-        for (const nome of categorias) {
+        for (const nome of Object.keys(this.home.categorias)) {
             const estaMarcada = await this.home.categoriaEstaMarcada(nome);
             if (categoriasMarcadas.includes(nome)) {
                 expect(estaMarcada).toBe(true);
@@ -45,49 +43,72 @@ export class HatStoreSteps {
         }
     }
 
-    async entaoDevoVerQuantidadeDeProdutos(quantidade) {
-        await expect.poll(async () => {
-            return this.home.obterQuantidadeDeProdutosVisiveis();
-        }).toBe(quantidade);
-    }
-
-    async entaoDevoVerListaDeProdutos(listaEsperada) {
-        await expect.poll(async () => {
-            return this.home.obterTitulosDeProdutosVisiveis();
-        }).toEqual(expect.arrayContaining(listaEsperada));
-    }
-
     async quandoFiltroPorFaixaDePreco(minimo, maximo) {
         await this.home.preencherFaixaDePreco(minimo, maximo);
         await this.home.aplicarFiltroDePreco();
     }
 
-    async dadoQueAcessoPaginaDeAutenticacao() {
-        await this.auth.acessarPaginaAutenticacao();
+    async entaoDeveExibirFeedbackDeBuscaSemResultados() {
+        await expect(this.home.mensagemNenhumChapeu).toBeVisible();
+    }
+
+    async entaoDeveHaverProdutosVisiveis() {
+        await expect.poll(async () => {
+            return this.home.obterQuantidadeDeProdutosVisiveis();
+        }).toBeGreaterThan(0);
+    }
+
+    async entaoProdutosVisteisDevemSerExatamente(listaEsperada) {
+        await expect.poll(async () => {
+            const atual = await this.home.obterTitulosDeProdutosVisiveis();
+            return atual.sort();
+        }).toEqual(listaEsperada.sort());
+    }
+
+    async dadoQueAcessoPaginaDeLogin() {
+        await this.login.acessarPaginaDeLogin();
+    }
+
+    async entaoCampoEmailCadastroDeveConter(email) {
+        await expect(this.login.inputCadastroEmail).toHaveValue(email);
+    }
+
+    async entaoFormularioDeCadastroDeveSerInvalido() {
+        const valido = await this.login.formCadastro.evaluate((form) => form.checkValidity());
+        expect(valido).toBe(false);
+    }
+
+    async entaoFormularioDeLoginDeveSerInvalido() {
+        const valido = await this.login.formLogin.evaluate((form) => form.checkValidity());
+        expect(valido).toBe(false);
+    }
+
+    async entaoDeveSerRedirecionadoParaHome() {
+        await expect.poll(() => this.page.url(), { timeout: 6000 }).toMatch(/index\.html|\/$/i);
     }
 
     async quandoRealizoCadastro(email, senha) {
-        await this.auth.abrirCadastro();
-        await this.auth.preencherCadastro(email, senha);
-        await this.auth.enviarCadastro();
+        await this.login.abrirCadastro();
+        await this.login.preencherCadastro(email, senha);
+        await this.login.enviarCadastro();
     }
 
-    async entaoCadastroDeveSerConcluidoComSucesso() {
+    async entaoMensagemDeCadastroDeveConter(textoOuRegex) {
         await expect.poll(async () => {
-            const mensagem = await this.auth.obterMensagemCadastro();
+            const mensagem = await this.login.obterMensagemCadastro();
             return mensagem.trim();
-        }, { timeout: 10000 }).toContain('Registro bem-sucedido');
+        }, { timeout: 10000 }).toMatch(textoOuRegex);
     }
 
     async quandoRealizoLogin(email, senha) {
-        await this.auth.preencherLogin(email, senha);
-        await this.auth.enviarLogin();
+        await this.login.preencherLogin(email, senha);
+        await this.login.enviarLogin();
     }
 
-    async entaoLoginFoiProcessado() {
+    async entaoMensagemDeLoginDeveConter(textoOuRegex) {
         await expect.poll(async () => {
-            const mensagem = await this.auth.obterMensagemLogin();
+            const mensagem = await this.login.obterMensagemLogin();
             return mensagem.trim();
-        }, { timeout: 10000 }).toMatch(/Não autorizado|Muitas tentativas|sucesso/i);
+        }, { timeout: 10000 }).toMatch(textoOuRegex);
     }
 }

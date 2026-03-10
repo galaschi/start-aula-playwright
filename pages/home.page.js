@@ -3,10 +3,11 @@ export class HomePage {
         this.page = page;
         this.campoBusca = page.getByPlaceholder('Buscar chapéu...');
         this.titulosChapeusVisiveis = page.locator('h3:visible');
-        this.campoPrecoMinimo = page.getByRole('spinbutton', { name: 'Mínimo' });
-        this.campoPrecoMaximo = page.getByRole('spinbutton', { name: 'Máximo' });
+        this.campoPrecoMinimo = page.locator('#preco-min');
+        this.campoPrecoMaximo = page.locator('#preco-max');
         this.botaoAplicarPreco = page.locator('#filter-form').getByRole('button', { name: 'Aplicar' });
         this.nomeItemCarrinho = page.locator('.cart-item-nome');
+        this.mensagemNenhumChapeu = page.getByText('Nenhum chapéu encontrado.');
         this.categorias = {
             Nacional: page.getByRole('checkbox', { name: 'Nacional', exact: true }),
             Internacional: page.getByRole('checkbox', { name: 'Internacional', exact: true }),
@@ -23,10 +24,7 @@ export class HomePage {
     }
 
     async adicionarProdutoAoCarrinho(nomeProduto) {
-        await this.page
-            .locator(`div:has(h3:has-text("${nomeProduto}")) button:has-text("Adicionar ao carrinho")`)
-            .first()
-            .click();
+        await this.page.locator(`button.add-to-cart-btn[data-nome="${nomeProduto}"]`).click();
     }
 
     async selecionarCategoria(categoriasMarcadas) {

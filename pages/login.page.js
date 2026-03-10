@@ -1,4 +1,4 @@
-export class AuthPage {
+export class LoginPage {
     constructor(page) {
         this.page = page;
         this.botaoCriarConta = page.getByRole('button', { name: 'Crie uma agora' });
@@ -13,12 +13,15 @@ export class AuthPage {
         this.inputLoginSenha = page.locator('#login-password');
     }
 
-    async acessarPaginaAutenticacao() {
+    async acessarPaginaDeLogin() {
         await this.page.goto('/auth.html');
     }
 
     async abrirCadastro() {
-        await this.botaoCriarConta.click();
+        const cadastroVisivel = await this.formCadastro.isVisible();
+        if (!cadastroVisivel) {
+            await this.botaoCriarConta.click();
+        }
     }
 
     async preencherCadastro(email, senha) {
@@ -31,7 +34,10 @@ export class AuthPage {
     }
 
     async abrirLogin() {
-        await this.botaoFazerLogin.click();
+        const loginVisivel = await this.formLogin.isVisible();
+        if (!loginVisivel) {
+            await this.botaoFazerLogin.click();
+        }
     }
 
     async preencherLogin(email, senha) {
