@@ -1,3 +1,5 @@
+import { expect } from '@playwright/test';
+
 export class HomePage {
     constructor(page) {
         this.page = page;
@@ -24,7 +26,12 @@ export class HomePage {
     }
 
     async adicionarProdutoAoCarrinho(nomeProduto) {
-        await this.page.locator(`button.add-to-cart-btn[data-nome="${nomeProduto}"]`).click();
+        const botaoAdicionar = this.page.locator(`button.add-to-cart-btn[data-nome="${nomeProduto}"]`);
+
+        await expect(botaoAdicionar).toBeVisible({ timeout: 10000 });
+        await expect(botaoAdicionar).toBeEnabled();
+        await botaoAdicionar.scrollIntoViewIfNeeded();
+        await botaoAdicionar.click();
     }
 
     async selecionarCategoria(categoriasMarcadas) {
@@ -41,8 +48,30 @@ export class HomePage {
         return this.categorias[nomeCategoria].isChecked();
     }
 
+    async validarCategoriasMarcadas(categoriasMarcadas) {
+        for (const [nome, checkbox] of Object.entries(this.categorias)) {
+            if (categoriasMarcadas.includes(nome)) {
+                await expect(checkbox).toBeChecked();
+            } else {
+                await expect(checkbox).not.toBeChecked();
+            }
+        }
+    }
+
     async obterQuantidadeDeProdutosVisiveis() {
         return this.titulosChapeusVisiveis.count();
+    }
+
+    async validarQuantidadeDeProdutosVisiveis(quantidadeEsperada) {
+        await expect.poll(async () => {
+            return this.obterQuantidadeDeProdutosVisiveis();
+        }).toBe(quantidadeEsperada);
+    }
+
+    async validarQuantidadeDeProdutosVisiveisMaiorQue(quantidadeMinima) {
+        await expect.poll(async () => {
+            return this.obterQuantidadeDeProdutosVisiveis();
+        }).toBeGreaterThan(quantidadeMinima);
     }
 
     async obterTitulosDeProdutosVisiveis() {
@@ -50,8 +79,31 @@ export class HomePage {
         return titulos.map((titulo) => titulo.trim());
     }
 
+    async obterAssinaturaProdutosVisiveis() {
+        const titulos = await this.obterTitulosDeProdutosVisiveis();
+        return titulos.sort().join('|');
+    }
+
+    async validarTitulosDeProdutosVisiveis(listaEsperada) {
+        await expect.poll(async () => {
+            const atual = await this.obterTitulosDeProdutosVisiveis();
+            return atual.sort();
+        }).toEqual(listaEsperada.sort());
+    }
+
     async obterNomeDoItemNoCarrinho() {
         return this.nomeItemCarrinho.innerText();
+    }
+
+    async validarItemNoCarrinho(nomeProduto) {
+        await expect.poll(async () => {
+            const item = await this.obterNomeDoItemNoCarrinho();
+            return item.trim();
+        }).toBe(nomeProduto);
+    }
+
+    async validarFeedbackBuscaSemResultados() {
+        await expect(this.mensagemNenhumChapeu).toBeVisible();
     }
 
     async preencherFaixaDePreco(minimo, maximo) {
@@ -60,6 +112,15 @@ export class HomePage {
     }
 
     async aplicarFiltroDePreco() {
+        const assinaturaAntes = await this.obterAssinaturaProdutosVisiveis();
+
+        await expect(this.botaoAplicarPreco).toBeVisible();
+        await expect(this.botaoAplicarPreco).toBeEnabled();
         await this.botaoAplicarPreco.click();
+
+        await expect.poll(async () => {
+            const assinaturaDepois = await this.obterAssinaturaProdutosVisiveis();
+            return assinaturaDepois !== assinaturaAntes;
+        }, { timeout: 10000 }).toBe(true);
     }
 }

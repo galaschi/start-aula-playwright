@@ -76,15 +76,12 @@ ou
 - Cobertura de login e cadastro com cenários positivos e negativos.
 - Estratégia de massa de dados com dados centralizados e factory para usuário dinâmico.
 - Regressão visual da home com baseline versionado.
-- Fixture compartilhada para injeção de páginas, steps e dados.
 - Scripts de CLI para executar suíte completa, parcial e visual.
 - Organização para manutenção futura
 
 ### Estrutura principal da Aula 3
-- `fixtures/hat-store.fixture.js`
 - `pages/home.page.js`
-- `pages/login.page.js`
-- `steps/hat-store.steps.js`
+- `pages/auth.page.js`
 - `tests/data/home.data.js`
 - `tests/data/login.data.js`
 - `tests/autenticado/carrinho.spec.js`
