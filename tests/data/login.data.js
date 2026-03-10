@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 export const cenariosLogin = {
     loginValido: {
         email: 'autoplaywright@teste.com',
@@ -22,10 +24,19 @@ export const cenariosCadastroInvalido = [
 ];
 
 export function criarUsuarioUnico() {
-    const timestamp = Date.now();
+    const email = faker.internet.email({
+        firstName: 'autoplaywright',
+        provider: 'teste.com'
+    }).toLowerCase();
+    const senha = faker.internet.password({
+        length: 12,
+        memorable: false,
+        pattern: /[A-Za-z0-9]/,
+        prefix: 'Aa1'
+    });
 
     return {
-        email: `autoplaywright+${timestamp}@teste.com`,
-        senha: 'Senha123456'
+        email,
+        senha
     };
 }
