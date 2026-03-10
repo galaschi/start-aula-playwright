@@ -1,3 +1,5 @@
+import { expect } from '@playwright/test';
+
 export class HomePage {
     constructor(page) {
         this.page = page;
@@ -23,10 +25,7 @@ export class HomePage {
     }
 
     async adicionarProdutoAoCarrinho(nomeProduto) {
-        await this.page
-            .locator(`div:has(h3:has-text("${nomeProduto}")) button:has-text("Adicionar ao carrinho")`)
-            .first()
-            .click();
+        await this.page.locator(`button.add-to-cart-btn[data-nome="${nomeProduto}"]`).click();
     }
 
     async selecionarCategoria(categoriasMarcadas) {
@@ -39,12 +38,24 @@ export class HomePage {
         }
     }
 
-    async categoriaEstaMarcada(nomeCategoria) {
-        return this.categorias[nomeCategoria].isChecked();
+    async validarCategoriasMarcadas(categoriasMarcadas) {
+        for (const [nome, checkbox] of Object.entries(this.categorias)) {
+            if (categoriasMarcadas.includes(nome)) {
+                await expect(checkbox).toBeChecked();
+            } else {
+                await expect(checkbox).not.toBeChecked();
+            }
+        }
     }
 
     async obterQuantidadeDeProdutosVisiveis() {
         return this.titulosChapeusVisiveis.count();
+    }
+
+    async validarQuantidadeDeProdutosVisiveis(quantidadeEsperada) {
+        await expect.poll(async () => {
+            return this.obterQuantidadeDeProdutosVisiveis();
+        }).toBe(quantidadeEsperada);
     }
 
     async obterTitulosDeProdutosVisiveis() {
@@ -52,8 +63,21 @@ export class HomePage {
         return titulos.map((titulo) => titulo.trim());
     }
 
+    async validarTitulosDeProdutosVisiveis(listaEsperada) {
+        await expect.poll(async () => {
+            return this.obterTitulosDeProdutosVisiveis();
+        }).toEqual(expect.arrayContaining(listaEsperada));
+    }
+
     async obterNomeDoItemNoCarrinho() {
         return this.nomeItemCarrinho.innerText();
+    }
+
+    async validarItemNoCarrinho(nomeProduto) {
+        await expect.poll(async () => {
+            const item = await this.obterNomeDoItemNoCarrinho();
+            return item.trim();
+        }).toBe(nomeProduto);
     }
 
     async preencherFaixaDePreco(minimo, maximo) {
