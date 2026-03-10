@@ -1,27 +1,28 @@
 import { test } from '@playwright/test';
-import { HatStoreSteps } from '../steps/hat-store.steps';
+import { HomePage } from '../pages/home.page';
+import { AuthPage } from '../pages/auth.page';
 
 test.describe('Busca e Carrinho', () => {
     test('Buscar por um produto e adicionar ao carrinho', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
+        const home = new HomePage(page);
 
-        await steps.dadoQueAcessoAHome();
-        await steps.quandoBuscoPorUmProduto('Chapéu Floppy');
-        await steps.quandoAdicionoProdutoAoCarrinho('Chapéu Floppy');
-        await steps.entaoDevoVerProdutoNoCarrinho('Chapéu Floppy');
+        await home.acessarPaginaInicial();
+        await home.buscarProduto('Chapéu Floppy');
+        await home.adicionarProdutoAoCarrinho('Chapéu Floppy');
+        await home.validarItemNoCarrinho('Chapéu Floppy');
     });
 });
 
 test.describe('Filtros de Produtos', () => {
     test('Filtrar produtos por categoria Nacional', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
+        const home = new HomePage(page);
 
-        await steps.dadoQueAcessoAHome();
-        await steps.entaoDevoVerQuantidadeDeProdutos(15);
-        await steps.quandoSelecionoCategorias(['Nacional']);
-        await steps.entaoCategoriaDeveEstarMarcada(['Nacional']);
-        await steps.entaoDevoVerQuantidadeDeProdutos(5);
-        await steps.entaoDevoVerListaDeProdutos([
+        await home.acessarPaginaInicial();
+        await home.validarQuantidadeDeProdutosVisiveis(15);
+        await home.selecionarCategoria(['Nacional']);
+        await home.validarCategoriasMarcadas(['Nacional']);
+        await home.validarQuantidadeDeProdutosVisiveis(5);
+        await home.validarTitulosDeProdutosVisiveis([
             'Chapéu Sertanejo',
             'Chapéu Cangaceiro',
             'Chapéu Snapback',
@@ -31,12 +32,13 @@ test.describe('Filtros de Produtos', () => {
     });
 
     test('Filtrar produtos por faixa de preco', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
+        const home = new HomePage(page);
 
-        await steps.dadoQueAcessoAHome();
-        await steps.quandoFiltroPorFaixaDePreco(50, 80);
-        await steps.entaoDevoVerQuantidadeDeProdutos(4);
-        await steps.entaoDevoVerListaDeProdutos([
+        await home.acessarPaginaInicial();
+        await home.preencherFaixaDePreco(50, 80);
+        await home.aplicarFiltroDePreco();
+        await home.validarQuantidadeDeProdutosVisiveis(4);
+        await home.validarTitulosDeProdutosVisiveis([
             'Chapéu Floppy',
             'Chapéu Pork Pie',
             'Chapéu Gustavo Carvalho',
@@ -47,19 +49,23 @@ test.describe('Filtros de Produtos', () => {
 
 test.describe('Autenticação', () => {
     test('Cadastrar um usuario', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
+        const auth = new AuthPage(page);
         const email = `autoplaywright+${Date.now()}@teste.com`;
 
-        await steps.dadoQueAcessoPaginaDeAutenticacao();
-        await steps.quandoRealizoCadastro(email, 'Senha123456');
-        await steps.entaoCadastroDeveSerConcluidoComSucesso();
+        await auth.acessarPaginaAutenticacao();
+        await auth.abrirCadastro();
+        await auth.preencherCadastro(email, 'Senha123456');
+        await auth.enviarCadastro();
+        await auth.validarCadastroConcluidoComSucesso();
     });
 
     test('Realizar login', async ({ page }) => {
-        const steps = new HatStoreSteps(page);
+        const auth = new AuthPage(page);
 
-        await steps.dadoQueAcessoPaginaDeAutenticacao();
-        await steps.quandoRealizoLogin('autoplaywright@teste.com', 'Senha123456');
-        await steps.entaoLoginFoiProcessado();
+        await auth.acessarPaginaAutenticacao();
+        await auth.abrirLogin();
+        await auth.preencherLogin('autoplaywright@teste.com', 'Senha123456');
+        await auth.enviarLogin();
+        await auth.validarLoginFoiProcessado();
     });
 });

@@ -1,3 +1,5 @@
+import { expect } from '@playwright/test';
+
 export class AuthPage {
     constructor(page) {
         this.page = page;
@@ -18,7 +20,10 @@ export class AuthPage {
     }
 
     async abrirCadastro() {
-        await this.botaoCriarConta.click();
+        const cadastroVisivel = await this.formCadastro.isVisible();
+        if (!cadastroVisivel) {
+            await this.botaoCriarConta.click();
+        }
     }
 
     async preencherCadastro(email, senha) {
@@ -31,7 +36,10 @@ export class AuthPage {
     }
 
     async abrirLogin() {
-        await this.botaoFazerLogin.click();
+        const loginVisivel = await this.formLogin.isVisible();
+        if (!loginVisivel) {
+            await this.botaoFazerLogin.click();
+        }
     }
 
     async preencherLogin(email, senha) {
@@ -47,7 +55,21 @@ export class AuthPage {
         return this.mensagemCadastro.innerText();
     }
 
+    async validarCadastroConcluidoComSucesso() {
+        await expect.poll(async () => {
+            const mensagem = await this.obterMensagemCadastro();
+            return mensagem.trim();
+        }, { timeout: 10000 }).toContain('Registro bem-sucedido');
+    }
+
     async obterMensagemLogin() {
         return this.mensagemLogin.innerText();
+    }
+
+    async validarLoginFoiProcessado() {
+        await expect.poll(async () => {
+            const mensagem = await this.obterMensagemLogin();
+            return mensagem.trim();
+        }, { timeout: 10000 }).toMatch(/Não autorizado|Muitas tentativas|sucesso|bem-sucedido/i);
     }
 }
