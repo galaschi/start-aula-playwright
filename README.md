@@ -2,7 +2,7 @@
 
 > [!NOTE]
 > Este treinamento foi pensado para evoluir de forma gradual, saindo da base da automação de testes e avançando para práticas mais robustas de projeto.
-> Nas próximas aulas, vamos abordar gerenciamento de massa de dados, diversidade de asserções, regressão visual, paralelismo, fixtures, scripts, configurações e execuções por linha de comando.
+> Nestas aulas abordaremos gerenciamento de massa de dados, diversidade de asserções, regressão visual, paralelismo, fixtures, scripts, configurações e execuções por linha de comando.
 > Também avançaremos em testes de API, incluindo funcionamento básico de testes automatizados, padrão de arquitetura e testes de contrato.
 
 ## Como acessar as aulas
@@ -55,11 +55,43 @@ ou
 ### Conteúdo
 - Refatoração dos testes para uma estrutura mais organizada.
 - Aplicação de `Page Object`.
-- Organização dos testes em estilo `BDD` (Feature e Cenários).
-- Criação da camada de `steps` para centralizar ações e validações.
 - Implementação dos testes:
    - `Cadastrar um usuario (Dever de casa)`
    - `Realizar login (Dever de casa)`
 
 ### Material
 - https://cwisw-my.sharepoint.com/:p:/r/personal/gabriel_cartelli_cwi_com_br/Documents/Crescer%20QA%20-%20Aula%2002%20-%20Automa%C3%A7%C3%A3o.pptx?d=wd6685b2bb2244333a71c2c7ffc498061&csf=1&web=1&e=FdZXjT
+
+
+## Aula 3: Automação frontend com Playwright
+
+### Acessar o código
+- `git switch aula-3`
+ou
+- `git switch aula-3-dever`
+
+### Conteúdo
+- Separação dos testes por contexto de negócio (home, filtros, login e visual).
+- Cenários combinados de componentes usando categoria + faixa de preço + busca.
+- Cobertura de login e cadastro com cenários positivos e negativos.
+- Estratégia de massa de dados com dados centralizados e factory para usuário dinâmico.
+- Fixtures compartilhadas para injeção de Page Objects e massas dinâmicas nos testes.
+- Regressão visual da home.
+- Fluxo E2E completo com cadastro, login em `beforeEach`, busca, carrinho, checkout e consulta de pedido.
+- Scripts de CLI para executar suíte completa, parcial e visual.
+
+
+## Aula 4: Automação backend com Playwright
+
+### Acessar o código
+- `git switch aula-4`
+
+### Referências oficiais
+- https://hatstore-prd.fly.dev/documentacao.html
+- https://hatstore-prd.fly.dev/swagger/index.html
+
+### Conteúdo
+- Separação da suíte de testes em `tests/front` e `tests/api`.
+- Reuso de autenticação para endpoints protegidos via fixture de API.
+- Cobertura de API para os principais endpoints da aplicação.
+- Testes de contrato para validar estrutura de resposta.
