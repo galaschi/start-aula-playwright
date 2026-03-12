@@ -55,8 +55,6 @@ ou
 ### Conteúdo
 - Refatoração dos testes para uma estrutura mais organizada.
 - Aplicação de `Page Object`.
-- Organização dos testes em estilo `BDD` (Feature e Cenários).
-- Criação da camada de `steps` para centralizar ações e validações.
 - Implementação dos testes:
    - `Cadastrar um usuario (Dever de casa)`
    - `Realizar login (Dever de casa)`
@@ -69,41 +67,31 @@ ou
 
 ### Acessar o código
 - `git switch aula-3`
+ou
+- `git switch aula-3-dever`
 
 ### Conteúdo
 - Separação dos testes por contexto de negócio (home, filtros, login e visual).
 - Cenários combinados de componentes usando categoria + faixa de preço + busca.
 - Cobertura de login e cadastro com cenários positivos e negativos.
 - Estratégia de massa de dados com dados centralizados e factory para usuário dinâmico.
-- Fixtures compartilhadas para injeção de Page Objects e massa dinâmica nos testes.
-- Regressão visual da home com baseline versionado.
+- Fixtures compartilhadas para injeção de Page Objects e massas dinâmicas nos testes.
+- Regressão visual da home.
+- Fluxo E2E completo com cadastro, login em `beforeEach`, busca, carrinho, checkout e consulta de pedido.
 - Scripts de CLI para executar suíte completa, parcial e visual.
-- Organização para manutenção futura
 
-### Estrutura principal da Aula 3
-- `fixtures/hat-store.fixture.js`
-- `pages/home.page.js`
-- `pages/auth.page.js`
-- `tests/data/home.data.js`
-- `tests/data/login.data.js`
-- `tests/autenticado/carrinho.spec.js`
-- `tests/home/home.spec.js`
-- `tests/login/cadastro.spec.js`
-- `tests/login/login.spec.js`
 
-### Comandos de execução (CLI)
-- `npm run test`
-- `npm run test:headed`
-- `npm run test:smoke`
-- `npm run test:filters`
-- `npm run test:home`
-- `npm run test:cadastro`
-- `npm run test:login`
-- `npm run test:login:todos`
-- `npm run test:autenticado`
-- `npm run test:visual`
-- `npm run test:visual:update`
-- `npm run report`
+## Aula 4: Automação backend com Playwright
 
-### Material
-- Nesta aula, o conteúdo está 100% na própria branch (`aula-3`).
+### Acessar o código
+- `git switch aula-4`
+
+### Referências oficiais
+- https://hatstore-prd.fly.dev/documentacao.html
+- https://hatstore-prd.fly.dev/swagger/index.html
+
+### Conteúdo
+- Separação da suíte de testes em `tests/front` e `tests/api`.
+- Reuso de autenticação para endpoints protegidos via fixture de API.
+- Cobertura de API para os principais endpoints da aplicação.
+- Testes de contrato para validar estrutura de resposta.
