@@ -75,11 +75,13 @@ ou
 - Cenários combinados de componentes usando categoria + faixa de preço + busca.
 - Cobertura de login e cadastro com cenários positivos e negativos.
 - Estratégia de massa de dados com dados centralizados e factory para usuário dinâmico.
+- Fixtures compartilhadas para injeção de Page Objects e massa dinâmica nos testes.
 - Regressão visual da home com baseline versionado.
 - Scripts de CLI para executar suíte completa, parcial e visual.
 - Organização para manutenção futura
 
 ### Estrutura principal da Aula 3
+- `fixtures/hat-store.fixture.js`
 - `pages/home.page.js`
 - `pages/auth.page.js`
 - `tests/data/home.data.js`
