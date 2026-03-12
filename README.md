@@ -69,22 +69,29 @@ ou
 
 ### Acessar o código
 - `git switch aula-3`
+ou
+- `git switch aula3-dever`
 
 ### Conteúdo
 - Separação dos testes por contexto de negócio (home, filtros, login e visual).
 - Cenários combinados de componentes usando categoria + faixa de preço + busca.
 - Cobertura de login e cadastro com cenários positivos e negativos.
 - Estratégia de massa de dados com dados centralizados e factory para usuário dinâmico.
+- Fixtures compartilhadas para injeção de Page Objects e massas dinâmicas nos testes.
 - Regressão visual da home com baseline versionado.
+- Fluxo E2E completo com cadastro, login em `beforeEach`, busca, carrinho, checkout e consulta de pedido.
 - Scripts de CLI para executar suíte completa, parcial e visual.
 - Organização para manutenção futura
 
 ### Estrutura principal da Aula 3
+- `fixtures/hat-store.fixture.js`
 - `pages/home.page.js`
 - `pages/auth.page.js`
+- `pages/checkout.page.js`
 - `tests/data/home.data.js`
 - `tests/data/login.data.js`
-- `tests/autenticado/carrinho.spec.js`
+- `tests/data/e2e.data.js`
+- `tests/e2e/fluxo-complexo.e2e.spec.js`
 - `tests/home/home.spec.js`
 - `tests/login/cadastro.spec.js`
 - `tests/login/login.spec.js`
@@ -98,10 +105,10 @@ ou
 - `npm run test:cadastro`
 - `npm run test:login`
 - `npm run test:login:todos`
-- `npm run test:autenticado`
+- `npm run test:e2e`
 - `npm run test:visual`
 - `npm run test:visual:update`
 - `npm run report`
 
 ### Material
-- Nesta aula, o conteúdo está 100% na própria branch (`aula-3`).
+- Nesta aula, o conteúdo está nas branches `aula-3` e `aula3-dever`.

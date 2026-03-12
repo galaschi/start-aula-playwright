@@ -9,6 +9,8 @@ export class HomePage {
         this.campoPrecoMaximo = page.locator('#preco-max');
         this.botaoAplicarPreco = page.locator('#filter-form').getByRole('button', { name: 'Aplicar' });
         this.nomeItemCarrinho = page.locator('.cart-item-nome');
+        this.botaoCarrinhoHeader = page.locator('#header-cart-btn');
+        this.botaoFinalizarCompra = page.getByRole('button', { name: 'Finalizar compra' });
         this.mensagemNenhumChapeu = page.getByText('Nenhum chapéu encontrado.');
         this.categorias = {
             Nacional: page.getByRole('checkbox', { name: 'Nacional', exact: true }),
@@ -100,6 +102,16 @@ export class HomePage {
             const item = await this.obterNomeDoItemNoCarrinho();
             return item.trim();
         }).toBe(nomeProduto);
+    }
+
+    async abrirCarrinho() {
+        await expect(this.botaoCarrinhoHeader).toBeVisible();
+        await this.botaoCarrinhoHeader.click();
+    }
+
+    async irParaCheckout() {
+        await expect(this.botaoFinalizarCompra).toBeVisible();
+        await this.botaoFinalizarCompra.click();
     }
 
     async validarFeedbackBuscaSemResultados() {

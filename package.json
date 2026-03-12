@@ -13,7 +13,7 @@
     "test:cadastro": "playwright test tests/login/cadastro.spec.js",
     "test:login": "playwright test tests/login/login.spec.js",
     "test:login:todos": "playwright test tests/login",
-    "test:autenticado": "playwright test tests/autenticado",
+    "test:e2e": "playwright test tests/e2e",
     "test:visual": "playwright test tests/home/home.spec.js -g \"Visual\"",
     "test:visual:update": "playwright test tests/home/home.spec.js -g \"Visual\" --update-snapshots",
     "report": "playwright show-report"
