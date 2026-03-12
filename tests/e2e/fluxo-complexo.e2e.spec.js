@@ -40,4 +40,13 @@ test.describe('Fluxo complexo E2E', () => {
             codigoPagamento
         ]);
     });
+
+    test('Deve manter item no carrinho ao retornar à home', async ({ homePage, massaFluxoE2E }) => {
+        await homePage.buscarProduto(massaFluxoE2E.produto);
+        await homePage.adicionarProdutoAoCarrinho(massaFluxoE2E.produto);
+        await homePage.validarItemNoCarrinho(massaFluxoE2E.produto);
+
+        await homePage.acessarPaginaInicial();
+        await homePage.validarItemNoCarrinho(massaFluxoE2E.produto);
+    });
 });
