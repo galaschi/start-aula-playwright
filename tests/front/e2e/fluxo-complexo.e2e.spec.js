@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/hat-store.fixture';
+import { test, expect } from '../../../fixtures/hat-store.fixture';
 
 test.describe('Fluxo complexo E2E', () => {
     test.beforeEach(async ({ authPage, massaFluxoE2E }) => {

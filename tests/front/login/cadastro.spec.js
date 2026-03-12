@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/hat-store.fixture';
+import { test } from '../../../fixtures/hat-store.fixture';
 import { cenariosCadastroInvalido, cenariosLogin } from '../data/login.data';
 
 test.describe('Cadastro de usuário', () => {

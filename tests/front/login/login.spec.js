@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/hat-store.fixture';
+import { test } from '../../../fixtures/hat-store.fixture';
 import { cenariosLoginInvalidoFrontend, cenariosLoginInvalidoBackend } from '../data/login.data';
 
 test.describe('Login', () => {

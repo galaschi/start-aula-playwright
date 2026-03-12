@@ -2,8 +2,8 @@ import { test as base, expect } from '@playwright/test';
 import { AuthPage } from '../pages/auth.page';
 import { HomePage } from '../pages/home.page';
 import { CheckoutPage } from '../pages/checkout.page';
-import { criarUsuarioUnico } from '../tests/data/user.data';
-import { criarMassaFluxoE2E } from '../tests/data/e2e.data';
+import { criarUsuarioUnico } from '../tests/front/data/user.data';
+import { criarMassaFluxoE2E } from '../tests/front/data/e2e.data';
 
 export const test = base.extend({
     authPage: async ({ page }, use) => {

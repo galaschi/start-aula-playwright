@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/hat-store.fixture';
+import { test, expect } from '../../../fixtures/hat-store.fixture';
 import {
     CHAPEUS,
     CENARIOS_CATEGORIA,

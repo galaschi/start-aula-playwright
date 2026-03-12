@@ -70,7 +70,7 @@ ou
 ### Acessar o código
 - `git switch aula-3`
 ou
-- `git switch aula3-dever`
+- `git switch aula-3-dever`
 
 ### Conteúdo
 - Separação dos testes por contexto de negócio (home, filtros, login e visual).
@@ -82,19 +82,6 @@ ou
 - Fluxo E2E completo com cadastro, login em `beforeEach`, busca, carrinho, checkout e consulta de pedido.
 - Scripts de CLI para executar suíte completa, parcial e visual.
 - Organização para manutenção futura
-
-### Estrutura principal da Aula 3
-- `fixtures/hat-store.fixture.js`
-- `pages/home.page.js`
-- `pages/auth.page.js`
-- `pages/checkout.page.js`
-- `tests/data/home.data.js`
-- `tests/data/login.data.js`
-- `tests/data/e2e.data.js`
-- `tests/e2e/fluxo-complexo.e2e.spec.js`
-- `tests/home/home.spec.js`
-- `tests/login/cadastro.spec.js`
-- `tests/login/login.spec.js`
 
 ### Comandos de execução (CLI)
 - `npm run test`
@@ -111,4 +98,31 @@ ou
 - `npm run report`
 
 ### Material
-- Nesta aula, o conteúdo está nas branches `aula-3` e `aula3-dever`.
+- Nesta aula, o conteúdo está nas branches `aula-3` e `aula-3-dever`.
+
+
+## Aula 4: Automação backend com Playwright
+
+### Acessar o código
+- `git switch aula-4`
+
+### Referências oficiais
+- https://hatstore-prd.fly.dev/documentacao.html
+- https://hatstore-prd.fly.dev/swagger/index.html
+
+### Conteúdo
+- Separação da suíte de testes em `tests/front` e `tests/api`.
+- Reuso de autenticação para endpoints protegidos via fixture de API.
+- Cobertura de API para os principais endpoints da aplicação.
+- Testes de contrato para validar estrutura de resposta.
+- Fluxo API: `Cadastro -> Login -> Consulta de pedidos` sem pedido prévio.
+
+### Comandos de execução (CLI)
+- `npm run test`
+- `npm run test:front`
+- `npm run test:api`
+- `npm run test:home`
+- `npm run test:cadastro`
+- `npm run test:login`
+- `npm run test:e2e`
+- `npm run report`
