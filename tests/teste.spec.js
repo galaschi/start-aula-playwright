@@ -10,7 +10,7 @@ test('Buscar por um produto', async ({ page }) => {
     await page.fill('input[placeholder="Buscar chapéu..."]', 'Chapéu Floppy');
 
     // Adicionar item ao carrinho
-    await page.click('button:has-text("Adicionar ao carrinho")');
+    await page.click('button.add-to-cart-btn[data-nome="Chapéu Floppy"]');
 
     // Validar que o item foi adicionado ao carrinho
     await expect(page.locator('.cart-item-nome')).toHaveText('Chapéu Floppy');
@@ -33,13 +33,14 @@ test('Filtrar por categoria', async ({ page }) => {
 
     // Validar chapéus visíveis após filtro
     await expect(page.locator('h3:visible')).toHaveCount(5);
-    await expect(page.locator('h3:visible')).toContainText([
-        'Chapéu Sertanejo', 
-        'Chapéu Cangaceiro', 
-        'Chapéu Snapback', 
-        'Chapéu de Pescador', 
+    const titulosCategoria = (await page.locator('h3:visible').allInnerTexts()).map((item) => item.trim());
+    expect(titulosCategoria.sort()).toEqual([
+        'Chapéu Sertanejo',
+        'Chapéu Cangaceiro',
+        'Chapéu Snapback',
+        'Chapéu de Pescador',
         'Chapéu Gaúcho'
-    ]);
+    ].sort());
 });
 
 // Filtrar produtos por faixa de preco
@@ -55,10 +56,11 @@ test('Filtrar por preco', async ({ page }) => {
 
     // Validar chapéus visíveis após filtro
     await expect(page.locator('h3:visible')).toHaveCount(4);
-    await expect(page.locator('h3:visible')).toContainText([
+    const titulosPreco = (await page.locator('h3:visible').allInnerTexts()).map((item) => item.trim());
+    expect(titulosPreco.sort()).toEqual([
         'Chapéu Floppy',
         'Chapéu Pork Pie',
         'Chapéu Gustavo Carvalho',
         'Chapéu Bowler'
-    ]);
+    ].sort());
 });
