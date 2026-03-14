@@ -10,7 +10,7 @@ test('Buscar por um produto', async ({ page }) => {
     await page.fill('input[placeholder="Buscar chapéu..."]', 'Chapéu Floppy');
 
     // Adicionar item ao carrinho
-    await page.click('button:has-text("Adicionar ao carrinho")');
+    await page.click('button.add-to-cart-btn[data-nome="Chapéu Floppy"]');
 
     // Validar que o item foi adicionado ao carrinho
     await expect(page.locator('.cart-item-nome')).toHaveText('Chapéu Floppy');
