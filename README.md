@@ -55,8 +55,6 @@ ou
 ### Conteúdo
 - Refatoração dos testes para uma estrutura mais organizada.
 - Aplicação de `Page Object`.
-- Organização dos testes em estilo `BDD` (Feature e Cenários).
-- Criação da camada de `steps` para centralizar ações e validações.
 - Implementação dos testes:
    - `Cadastrar um usuario (Dever de casa)`
    - `Realizar login (Dever de casa)`
@@ -78,27 +76,9 @@ ou
 - Cobertura de login e cadastro com cenários positivos e negativos.
 - Estratégia de massa de dados com dados centralizados e factory para usuário dinâmico.
 - Fixtures compartilhadas para injeção de Page Objects e massas dinâmicas nos testes.
-- Regressão visual da home com baseline versionado.
+- Regressão visual da home.
 - Fluxo E2E completo com cadastro, login em `beforeEach`, busca, carrinho, checkout e consulta de pedido.
 - Scripts de CLI para executar suíte completa, parcial e visual.
-- Organização para manutenção futura
-
-### Comandos de execução (CLI)
-- `npm run test`
-- `npm run test:headed`
-- `npm run test:smoke`
-- `npm run test:filters`
-- `npm run test:home`
-- `npm run test:cadastro`
-- `npm run test:login`
-- `npm run test:login:todos`
-- `npm run test:e2e`
-- `npm run test:visual`
-- `npm run test:visual:update`
-- `npm run report`
-
-### Material
-- Nesta aula, o conteúdo está nas branches `aula-3` e `aula-3-dever`.
 
 
 ## Aula 4: Automação backend com Playwright
@@ -115,14 +95,3 @@ ou
 - Reuso de autenticação para endpoints protegidos via fixture de API.
 - Cobertura de API para os principais endpoints da aplicação.
 - Testes de contrato para validar estrutura de resposta.
-- Fluxo API: `Cadastro -> Login -> Consulta de pedidos` sem pedido prévio.
-
-### Comandos de execução (CLI)
-- `npm run test`
-- `npm run test:front`
-- `npm run test:api`
-- `npm run test:home`
-- `npm run test:cadastro`
-- `npm run test:login`
-- `npm run test:e2e`
-- `npm run report`
