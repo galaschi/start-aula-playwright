@@ -59,13 +59,94 @@ test.describe('Autenticação', () => {
         await auth.validarCadastroConcluidoComSucesso();
     });
 
-    test('Realizar login', async ({ page }) => {
+    test('Tentar cadastrar um usuario sem informar email', async ({ page }) => {
         const auth = new AuthPage(page);
 
         await auth.acessarPaginaAutenticacao();
+        await auth.abrirCadastro();
+        await auth.preencherCadastro('', 'Senha123456');
+        await auth.enviarCadastro();
+        await auth.visualizarErroEmailObrigatorio();
+    });
+
+    test('Tentar cadastrar um usuario sem informar senha', async ({ page }) => {
+        const auth = new AuthPage(page);
+        const email = `autoplaywright+${Date.now()}@teste.com`;
+
+        await auth.acessarPaginaAutenticacao();
+        await auth.abrirCadastro();
+        await auth.preencherCadastro(email, '');
+        await auth.enviarCadastro();
+        await auth.visualizarErroSenha();
+    });
+
+    test('Tentar cadastrar um usuario com senha inválida', async ({ page }) => {
+        const auth = new AuthPage(page);
+        const email = `autoplaywright+${Date.now()}@teste.com`;
+
+        await auth.acessarPaginaAutenticacao();
+        await auth.abrirCadastro();
+        await auth.preencherCadastro(email, '123');
+        await auth.enviarCadastro();
+        await auth.visualizarErroSenha();
+    });
+
+    test('Tentar cadastrar um usuario já existente', async ({ page }) => {
+        const auth = new AuthPage(page);
+        const email = `autoplaywright+${Date.now()}@teste.com`;
+        const senha = 'Senha123456';
+
+        await auth.cadastrarUsuario(email, senha);
+
+        await auth.acessarPaginaAutenticacao();
+        await auth.abrirCadastro();
+        await auth.preencherCadastro(email, senha);
+        await auth.enviarCadastro();
+        await auth.visualizarErroUsuarioExistente();
+    });
+
+    test('Realizar login', async ({ page }) => {
+        const auth = new AuthPage(page);
+        const email = `autoplaywright+${Date.now()}@teste.com`;
+        const senha = 'Senha123456';
+
+        await auth.cadastrarUsuario(email, senha);
+
+        await auth.acessarPaginaAutenticacao();
         await auth.abrirLogin();
-        await auth.preencherLogin('autoplaywright@teste.com', 'Senha123456');
+        await auth.preencherLogin(email, senha);
         await auth.enviarLogin();
         await auth.validarLoginFoiProcessado();
+        await auth.validarExpiracaoToken(1); // Validar expiração do token em 1 dia
+    });
+
+    test('Realizar login com opção lembrar-me', async ({ page }) => {
+        const auth = new AuthPage(page);
+        const email = `autoplaywright+${Date.now()}@teste.com`;
+        const senha = 'Senha123456';
+
+        await auth.cadastrarUsuario(email, senha);
+
+        await auth.acessarPaginaAutenticacao();
+        await auth.abrirLogin();
+        await auth.preencherLogin(email, senha);
+        await auth.marcarLembrarMe();
+        await auth.enviarLogin();
+        await auth.validarLoginFoiProcessado();
+        await auth.validarExpiracaoToken(30); // Validar expiração do token em 30 dias para lembrar-me
+    });
+
+    test('Tentar realizar login com senha incorreta', async ({ page }) => {
+        const auth = new AuthPage(page);
+        const email = `autoplaywright+${Date.now()}@teste.com`;
+        const senha = 'Senha123456';
+
+        await auth.cadastrarUsuario(email, senha);
+
+        await auth.acessarPaginaAutenticacao();
+        await auth.abrirLogin();
+        await auth.preencherLogin(email, 'SenhaErrada');
+        await auth.enviarLogin();
+        await auth.visualizarErroLoginNaoAutorizado();
     });
 });
