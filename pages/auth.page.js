@@ -7,6 +7,10 @@ export class AuthPage {
         this.botaoFazerLogin = page.getByRole('button', { name: 'Faça o login' });
         this.formCadastro = page.locator('#register-form');
         this.formLogin = page.locator('#login-form');
+        this.erroCadastroEmail = page.locator('#erro-register-email');
+        this.erroCadastroSenha = page.locator('#erro-register-password');
+        this.erroLoginEmail = page.locator('#erro-login-email');
+        this.erroLoginSenha = page.locator('#erro-login-password');
         this.mensagemCadastro = page.locator('#register-message');
         this.mensagemLogin = page.locator('#login-message');
         this.inputCadastroEmail = page.locator('#register-email');
@@ -74,8 +78,16 @@ export class AuthPage {
     }
 
     async validarFormularioCadastroInvalido() {
-        const valido = await this.formCadastro.evaluate((form) => form.checkValidity());
-        expect(valido).toBe(false);
+        await expect.poll(async () => {
+            const [erroEmail, erroSenha, validacaoEmail, validacaoSenha] = await Promise.all([
+                this.erroCadastroEmail.innerText(),
+                this.erroCadastroSenha.innerText(),
+                this.inputCadastroEmail.evaluate((input) => input.validationMessage || ''),
+                this.inputCadastroSenha.evaluate((input) => input.validationMessage || '')
+            ]);
+
+            return `${erroEmail} ${erroSenha} ${validacaoEmail} ${validacaoSenha}`.trim();
+        }, { timeout: 10000 }).toMatch(/e-mail válido|include an '@'|missing an '@'|mínimo 6 caracteres|preencha a senha/i);
     }
 
     async obterMensagemLogin() {
@@ -97,8 +109,16 @@ export class AuthPage {
     }
 
     async validarFormularioLoginInvalido() {
-        const valido = await this.formLogin.evaluate((form) => form.checkValidity());
-        expect(valido).toBe(false);
+        await expect.poll(async () => {
+            const [erroEmail, erroSenha, validacaoEmail, validacaoSenha] = await Promise.all([
+                this.erroLoginEmail.innerText(),
+                this.erroLoginSenha.innerText(),
+                this.inputLoginEmail.evaluate((input) => input.validationMessage || ''),
+                this.inputLoginSenha.evaluate((input) => input.validationMessage || '')
+            ]);
+
+            return `${erroEmail} ${erroSenha} ${validacaoEmail} ${validacaoSenha}`.trim();
+        }, { timeout: 10000 }).toMatch(/e-mail válido|include an '@'|missing an '@'|preencha a senha/i);
     }
 
     async validarRedirecionamentoParaHome() {

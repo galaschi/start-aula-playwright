@@ -1,3 +1,4 @@
+import { homedir } from 'os';
 import { test, expect } from '../../fixtures/hat-store.fixture';
 import {
     CHAPEUS,
@@ -27,9 +28,12 @@ test.describe('Busca e Carrinho', () => {
 });
 
 test.describe('Filtros', () => {
+    test.beforeEach(async ({ homePage }) => {
+        await homePage.acessarPaginaInicial();
+    });
+
     for (const categorias of CENARIOS_CATEGORIA) {
         test(`Deve filtrar por categorias: ${categorias.join(' + ')}`, async ({ homePage }) => {
-            await homePage.acessarPaginaInicial();
             await homePage.selecionarCategoria(categorias);
             await homePage.validarCategoriasMarcadas(categorias);
 
@@ -42,7 +46,6 @@ test.describe('Filtros', () => {
 
     for (const faixa of CENARIOS_FAIXA_PRECO) {
         test(`Deve filtrar por faixa de preço: ${faixa.minimo} a ${faixa.maximo}`, async ({ homePage }) => {
-            await homePage.acessarPaginaInicial();
             await homePage.preencherFaixaDePreco(faixa.minimo, faixa.maximo);
             await homePage.aplicarFiltroDePreco();
 
@@ -55,7 +58,6 @@ test.describe('Filtros', () => {
 
     for (const cenario of CENARIOS_COMBINADOS) {
         test(`Deve filtrar por categoria + preço: ${cenario.categorias.join(' + ')} e ${cenario.minimo}-${cenario.maximo}`, async ({ homePage }) => {
-            await homePage.acessarPaginaInicial();
             await homePage.selecionarCategoria(cenario.categorias);
             await homePage.validarCategoriasMarcadas(cenario.categorias);
             await homePage.preencherFaixaDePreco(cenario.minimo, cenario.maximo);
