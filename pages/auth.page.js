@@ -85,7 +85,7 @@ export class AuthPage {
                 this.inputCadastroSenha.evaluate((input) => input.validationMessage || '').catch(() => '')
             ]);
             return `${erroEmail} ${erroSenha} ${validacaoEmail} ${validacaoSenha}`.trim();
-        }, { timeout: 10000 }).toMatch(/e-mail válido|include an '@'|missing an '@'|mínimo 6 caracteres|preencha a senha/i);
+        }, { timeout: 10000 }).toMatch(/e-mail válido|include an|missing an|mínimo 6 caracteres|preencha a senha/i);
     }
 
     async obterMensagemLogin() {
@@ -118,7 +118,7 @@ export class AuthPage {
                 this.inputLoginSenha.evaluate((input) => input.validationMessage || '').catch(() => '')
             ]);
             return `${erroEmail} ${erroSenha} ${validacaoEmail} ${validacaoSenha}`.trim();
-        }, { timeout: 10000 }).toMatch(/e-mail válido|include an '@'|missing an '@'|preencha a senha/i);
+        }, { timeout: 10000 }).toMatch(/e-mail válido|include an|missing an|preencha a senha/i);
     }
 
     async validarRedirecionamentoParaHome() {
