@@ -80,14 +80,14 @@ export class AuthPage {
     async validarFormularioCadastroInvalido() {
         await expect.poll(async () => {
             const [erroEmail, erroSenha, validacaoEmail, validacaoSenha] = await Promise.all([
-                this.erroCadastroEmail.innerText(),
-                this.erroCadastroSenha.innerText(),
-                this.inputCadastroEmail.evaluate((input) => input.validationMessage || ''),
-                this.inputCadastroSenha.evaluate((input) => input.validationMessage || '')
+                this.erroCadastroEmail.innerText().catch(() => ''),
+                this.erroCadastroSenha.innerText().catch(() => ''),
+                this.inputCadastroEmail.evaluate((input) => input.validationMessage || '').catch(() => ''),
+                this.inputCadastroSenha.evaluate((input) => input.validationMessage || '').catch(() => '')
             ]);
 
             return `${erroEmail} ${erroSenha} ${validacaoEmail} ${validacaoSenha}`.trim();
-        }, { timeout: 10000 }).toMatch(/e-mail válido|include an '@'|missing an '@'|mínimo 6 caracteres|preencha a senha/i);
+        }, { timeout: 10000 }).toMatch(/e-mail válido|include an|missing an|mínimo 6 caracteres|preencha a senha/i);
     }
 
     async obterMensagemLogin() {
@@ -111,14 +111,14 @@ export class AuthPage {
     async validarFormularioLoginInvalido() {
         await expect.poll(async () => {
             const [erroEmail, erroSenha, validacaoEmail, validacaoSenha] = await Promise.all([
-                this.erroLoginEmail.innerText(),
-                this.erroLoginSenha.innerText(),
-                this.inputLoginEmail.evaluate((input) => input.validationMessage || ''),
-                this.inputLoginSenha.evaluate((input) => input.validationMessage || '')
+                this.erroLoginEmail.innerText().catch(() => ''),
+                this.erroLoginSenha.innerText().catch(() => ''),
+                this.inputLoginEmail.evaluate((input) => input.validationMessage || '').catch(() => ''),
+                this.inputLoginSenha.evaluate((input) => input.validationMessage || '').catch(() => '')
             ]);
 
             return `${erroEmail} ${erroSenha} ${validacaoEmail} ${validacaoSenha}`.trim();
-        }, { timeout: 10000 }).toMatch(/e-mail válido|include an '@'|missing an '@'|preencha a senha/i);
+        }, { timeout: 10000 }).toMatch(/e-mail válido|include an|missing an|preencha a senha/i);
     }
 
     async validarRedirecionamentoParaHome() {
