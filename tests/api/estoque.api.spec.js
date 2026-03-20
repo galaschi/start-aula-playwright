@@ -1,12 +1,10 @@
 import { test, expect } from '../../fixtures/api.fixture';
 import { validarContratoEstoque, validarContratoHatComEstoque } from './support/contracts';
+import { getJson } from './support/helpers';
 
 test.describe('Estoque', () => {
     test('GET /api/estoque deve listar estoque', async ({ apiContext }) => {
-        const response = await apiContext.get('/api/estoque');
-        expect(response.ok()).toBeTruthy();
-
-        const estoque = await response.json();
+        const estoque = await getJson(apiContext, '/api/estoque');
         expect(Array.isArray(estoque)).toBeTruthy();
         expect(estoque.length).toBeGreaterThan(0);
 
@@ -16,9 +14,7 @@ test.describe('Estoque', () => {
     });
 
     test('PATCH /api/hats/{id}/estoque deve atualizar e restaurar o estoque', async ({ apiContext }) => {
-        const estoqueResponse = await apiContext.get('/api/estoque');
-        expect(estoqueResponse.ok()).toBeTruthy();
-        const estoque = await estoqueResponse.json();
+        const estoque = await getJson(apiContext, '/api/estoque');
 
         const alvo = estoque.find((item) => item.quantidade < 200) || estoque[0];
         expect(alvo).toBeTruthy();
@@ -32,7 +28,7 @@ test.describe('Estoque', () => {
 
         expect(patchResponse.status()).toBe(200);
         const body = await patchResponse.json();
-    validarContratoHatComEstoque(body);
+        validarContratoHatComEstoque(body);
         expect(body.id).toBe(alvo.id);
         expect(body.quantidade).toBe(quantidadeNova);
 

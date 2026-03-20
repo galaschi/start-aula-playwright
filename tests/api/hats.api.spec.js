@@ -1,12 +1,10 @@
 import { test, expect } from '../../fixtures/api.fixture';
 import { validarContratoHatComEstoque } from './support/contracts';
+import { getJson, buscarHats } from './support/helpers';
 
 test.describe('Produtos', () => {
     test('GET /api/hats deve listar chapéus', async ({ apiContext }) => {
-        const response = await apiContext.get('/api/hats');
-        expect(response.ok()).toBeTruthy();
-
-        const hats = await response.json();
+        const hats = await buscarHats(apiContext);
         expect(Array.isArray(hats)).toBeTruthy();
         expect(hats.length).toBeGreaterThan(0);
 
@@ -16,10 +14,7 @@ test.describe('Produtos', () => {
     });
 
     test('GET /api/hats com filtros deve respeitar categoria e faixa de preço', async ({ apiContext }) => {
-        const response = await apiContext.get('/api/hats?categoria=nacional&min=50&max=150');
-        expect(response.ok()).toBeTruthy();
-
-        const hats = await response.json();
+        const hats = await getJson(apiContext, '/api/hats?categoria=nacional&min=50&max=150');
         expect(Array.isArray(hats)).toBeTruthy();
 
         for (const hat of hats) {
@@ -31,10 +26,7 @@ test.describe('Produtos', () => {
     });
 
     test('GET /api/hats com categoria inválida deve retornar lista vazia', async ({ apiContext }) => {
-        const response = await apiContext.get('/api/hats?categoria=nao-existe');
-        expect(response.ok()).toBeTruthy();
-
-        const hats = await response.json();
+        const hats = await getJson(apiContext, '/api/hats?categoria=nao-existe');
         expect(Array.isArray(hats)).toBeTruthy();
         expect(hats.length).toBe(0);
     });

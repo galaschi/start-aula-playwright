@@ -17,7 +17,7 @@ test.describe('Autenticação ', () => {
     test('POST /auth/login deve retornar token JWT', async ({ apiContext }) => {
         const usuario = criarUsuarioApi();
         const registerResponse = await apiContext.post('/auth/register', { data: usuario });
-        expect([201, 409]).toContain(registerResponse.status());
+        expect(registerResponse.status()).toBe(201);
 
         const response = await apiContext.post('/auth/login', {
             data: {
@@ -44,7 +44,7 @@ test.describe('Autenticação ', () => {
     test('POST /auth/login com senha inválida deve retornar erro de autenticação', async ({ apiContext }) => {
         const usuario = criarUsuarioApi();
         const registerResponse = await apiContext.post('/auth/register', { data: usuario });
-        expect([201, 409]).toContain(registerResponse.status());
+        expect(registerResponse.status()).toBe(201);
 
         const response = await apiContext.post('/auth/login', {
             data: {

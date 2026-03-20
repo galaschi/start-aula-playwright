@@ -1,15 +1,12 @@
 import { test, expect } from '../../fixtures/api.fixture';
 import { criarPayloadPedido } from './data/api.data';
 import { validarContratoPedido } from './support/contracts';
+import { buscarHats, obterHatDisponivel } from './support/helpers';
 
 test.describe('Pedido', () => {
     test('POST /api/pedido deve criar pedido autenticado com contrato válido', async ({ apiContext, authHeader, apiUser }) => {
-        const hatsResponse = await apiContext.get('/api/hats');
-        expect(hatsResponse.ok()).toBeTruthy();
-
-        const hats = await hatsResponse.json();
-        const hatDisponivel = hats.find((hat) => hat.temEstoque || hat.quantidade > 0);
-        expect(hatDisponivel).toBeTruthy();
+        const hats = await buscarHats(apiContext);
+        const hatDisponivel = obterHatDisponivel(hats);
 
         const payload = criarPayloadPedido({
             usuario: apiUser,
@@ -31,9 +28,7 @@ test.describe('Pedido', () => {
     });
 
     test('POST /api/pedido sem autenticação deve retornar 401', async ({ apiContext }) => {
-        const hatsResponse = await apiContext.get('/api/hats');
-        expect(hatsResponse.ok()).toBeTruthy();
-        const hats = await hatsResponse.json();
+        const hats = await buscarHats(apiContext);
 
         const usuarioFake = {
             nome: 'Usuario Sem Auth',
