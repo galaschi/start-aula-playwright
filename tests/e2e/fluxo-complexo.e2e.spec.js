@@ -30,14 +30,16 @@ test.describe('Fluxo complexo E2E', () => {
 
         const codigoPagamento = await checkoutPage.obterCodigoPagamento();
         expect(codigoPagamento).not.toBe('');
+        const cpfFormatado = massaFluxoE2E.checkout.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 
         await checkoutPage.fecharModalPagamentoSeVisivel();
         await checkoutPage.acessarMeusPedidos();
+        await checkoutPage.consultarPedidosPorCpf(massaFluxoE2E.checkout.cpf);
         await checkoutPage.validarConsultaPedido([
-            'meus pedidos',
+            massaFluxoE2E.checkout.nome,
+            cpfFormatado,
             massaFluxoE2E.produto,
-            massaFluxoE2E.checkout.email,
-            codigoPagamento
+            'pix'
         ]);
     });
 

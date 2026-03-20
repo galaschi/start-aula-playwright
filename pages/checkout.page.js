@@ -18,6 +18,11 @@ export class CheckoutPage {
         this.finalizarBtn = page.locator('.checkout-form-btn').first();
         this.codigoPagamento = page.locator('#codigo-pagamento');
         this.fecharModalPagamento = page.locator('#fechar-modal-pagamento');
+
+        // Meus Pedidos
+        this.cpfBuscaInput = page.locator('#cpf-consulta-pedidos');
+        this.btnBuscarPedidos = page.locator('#consulta-form-pedidos').getByRole('button', { name: 'Consultar' });
+        this.listaPedidos = page.locator('#pedidos-list');
     }
 
     async preencherDadosPessoais(dados) {
@@ -67,10 +72,16 @@ export class CheckoutPage {
         await menu.getByText(/Meus Pedidos/i).first().click();
     }
 
-    async validarConsultaPedido(palavrasChave) {
-        await expect.poll(async () => {
-            const conteudo = (await this.page.locator('body').innerText()).toLowerCase();
-            return palavrasChave.some((valor) => conteudo.includes(String(valor).toLowerCase()));
-        }, { timeout: 10000 }).toBe(true);
+    async consultarPedidosPorCpf(cpf) {
+        await expect(this.cpfBuscaInput).toBeVisible({ timeout: 10000 });
+        await this.cpfBuscaInput.fill(cpf);
+        await this.btnBuscarPedidos.click();
+    }
+
+    async validarConsultaPedido(dadosEsperados) {
+        await expect(this.listaPedidos.locator('.pedido-card').first()).toBeVisible({ timeout: 10000 });
+        for (const valor of dadosEsperados) {
+            await expect(this.listaPedidos).toContainText(String(valor));
+        }
     }
 }
